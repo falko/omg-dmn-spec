@@ -197,7 +197,7 @@
 							</xsd:element>
 							<xsd:element name="typeRef" type="tDMNElementReference"/>
 						</xsd:choice>
-						<xsd:element name="allowedValue" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="allowedValue" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
 					</xsd:sequence>
 					<xsd:element name="itemComponent" type="tItemComponent" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:choice>
@@ -262,30 +262,9 @@
 		<xsd:complexContent>
 			<xsd:extension base="tExpression">
 				<xsd:sequence>
-					<xsd:element name="input" minOccurs="0" maxOccurs="unbounded">
-						<xsd:complexType>
-							<xsd:complexContent>
-								<xsd:extension base="tClause">
-									<xsd:sequence>
-										<xsd:element name="inputExpression" type="tLiteralExpression"/>
-									</xsd:sequence>
-								</xsd:extension>
-							</xsd:complexContent>
-						</xsd:complexType>
-					</xsd:element>
+					<xsd:element name="input" type="tDTInput" minOccurs="0" maxOccurs="unbounded"/>
 					<!-- NB: when the hit policy is FIRST or RULE ORDER, the ordering of the rules is significant and MUST be preserved -->
-					<xsd:element name="output" maxOccurs="unbounded">
-						<xsd:complexType>
-							<xsd:complexContent>
-								<xsd:extension base="tClause">
-									<xsd:sequence>
-										<xsd:element name="outputDefinition" type="tDMNElementReference" minOccurs="0"/>
-										<xsd:element name="defaultOutputEntry" type="tLiteralExpression" minOccurs="0"/>
-									</xsd:sequence>
-								</xsd:extension>
-							</xsd:complexContent>
-						</xsd:complexType>
-					</xsd:element>
+					<xsd:element name="output" type="tDTOutput" maxOccurs="unbounded"/>
 					<xsd:element name="rule" type="tDecisionRule" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 				<xsd:attribute name="hitPolicy" type="HitPolicy" use="optional" default="UNIQUE"/>
@@ -306,18 +285,18 @@
 		<xsd:sequence>
 			<xsd:element name="inputEntry" minOccurs="0" maxOccurs="unbounded">
 				<xsd:complexType>
-					<xsd:complexContent>
-						<xsd:extension base="tLiteralExpression">
-							<xsd:attribute name="clauseRef" type="xsd:IDREF"/>
+					<xsd:simpleContent>
+						<xsd:extension base="tUnaryTests">
+							<xsd:attribute name="inputRef" type="xsd:IDREF"/>
 						</xsd:extension>
-					</xsd:complexContent>
+					</xsd:simpleContent>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element name="outputEntry" maxOccurs="unbounded">
 				<xsd:complexType>
 					<xsd:complexContent>
 						<xsd:extension base="tLiteralExpression">
-							<xsd:attribute name="clauseRef" type="xsd:IDREF"/>
+							<xsd:attribute name="outputRef" type="xsd:IDREF"/>
 						</xsd:extension>
 					</xsd:complexContent>
 				</xsd:complexType>
@@ -463,6 +442,104 @@
 			<xsd:extension base="tExpression">
 				<xsd:sequence>
 					<xsd:element ref="Expression" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="tUnaryTests">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*"/>
+			<xsd:pattern value="(\.)?[0-9]([0-9]+|\.?)[0-9]*"/>
+			<xsd:pattern value="date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)"/>
+			<xsd:pattern value="&quot;(\S|\s)+&quot;"/>
+			<xsd:pattern value="(not\()?
+			(
+			(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+			(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+			&quot;(\S|\s)+&quot;|
+			date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+			)|
+			(
+				(&gt;|&gt;=|&lt;|&lt;=)
+				(
+				(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+				(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+				date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+				)
+			)|
+			(
+				(\[|\(|\])
+				(
+					(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+					(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+					date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+				)..
+				(
+					(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+					(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+					date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+				)
+				(\]|\)|\[)
+			)
+			(,
+			(
+			(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+			(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+			&quot;(\S|\s)+&quot;|
+			date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+			)|
+			(
+				(&gt;|&gt;=|&lt;|&lt;=)
+				(
+				(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+				(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+				date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+				)
+			)|
+			(
+				(\[|\(|\])
+				(
+					(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+					(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+					date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+				)..
+				(
+					(\i)( |\.)?((\c|[0-9]|\-|\+|\*|/|&apos;)( |\.)?)*|
+					(\.)?[0-9]([0-9]+|\.?)[0-9]*|
+					date\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}&quot;\)|time\(&quot;[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)|duration\(&quot;P([0-9]{1,2}D)?(T([0-9]{1,2}H)?([0-9]{1,2}M)?([0-9]{1,2}S(\.[0-9]*)?)?)&quot;\)|duration\(&quot;P([0-9]+Y)?([0-9]+M)?&quot;\)|date and time\(&quot;[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{1,2}:[0-5][0-9]:[0-5][0-9](\.[0-9]*)?(Z)?&quot;\)
+				)
+				(\]|\)|\[)
+			)
+			)*\)?|-"/>
+			<!--name-->
+			<!--number-->
+			<!--dateTime-->
+			<!--stringLiteral-->
+			<!--unaryTests1 = \((name|number|literal|dateTime)\)
+			     unaryTests2 = \((gtOrLt)(name|number|dateTime)\)
+                 unaryTests3 = \((intervalStart)(name|number|dateTime)..(name|number|dateTime)(intervalEnd)\)
+                 unaryTests4 = not? \((unaryTests1|unaryTests2|unaryTests3)(,(unaryTests1|unaryTests2|unaryTests3))*\)
+					 -->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="tDTOutput">
+		<xsd:complexContent>
+			<xsd:extension base="tClause">
+				<xsd:sequence>
+					<!-- NB: When the isOrdered attribute is "true", the ordering of the output entries is significant and MUST be preserved -->
+					<xsd:element name="outputDefinition" type="tDMNElementReference" minOccurs="0"/>
+					<xsd:element name="outputValue" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="defaultOutputEntry" type="tLiteralExpression" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="tDTInput">
+		<xsd:complexContent>
+			<xsd:extension base="tClause">
+				<xsd:sequence>
+					<xsd:element name="inputExpression" type="tLiteralExpression"/>
+					<xsd:element name="inputValue" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
