@@ -13,10 +13,10 @@
 	<xsd:complexType name="tDMNElementReference">
 		<xsd:attribute name="href" type="xsd:anyURI" use="required"/>
 	</xsd:complexType>
-	<xsd:element name="Definitions" type="tDefinitions"/>
+	<xsd:element name="Definitions" type="tDefinitions" substitutionGroup="NamedElement"/>
 	<xsd:complexType name="tDefinitions">
 		<xsd:complexContent>
-			<xsd:extension base="tDMNElement">
+			<xsd:extension base="tNamedElement">
 				<xsd:sequence>
 					<xsd:element ref="Import" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="ItemDefinition" minOccurs="0" maxOccurs="unbounded"/>
@@ -36,7 +36,7 @@
 		<xsd:attribute name="locationURI" type="xsd:anyURI" use="optional"/>
 		<xsd:attribute name="importType" type="xsd:anyURI" use="required"/>
 	</xsd:complexType>
-	<xsd:element name="ElementCollection" type="tElementCollection"/>
+	<xsd:element name="ElementCollection" type="tElementCollection" substitutionGroup="NamedElement"/>
 	<xsd:complexType name="tElementCollection">
 		<xsd:complexContent>
 			<xsd:extension base="tNamedElement">
@@ -46,7 +46,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="DRGElement" type="tDRGElement" abstract="true"/>
+	<xsd:element name="DRGElement" type="tDRGElement" abstract="true" substitutionGroup="NamedElement"/>
 	<xsd:complexType name="tDRGElement">
 		<xsd:complexContent>
 			<xsd:extension base="tNamedElement"/>
@@ -168,7 +168,7 @@
 			<xsd:extension base="tDMNElement"/>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="ItemDefinition" type="tItemDefinition"/>
+	<xsd:element name="ItemDefinition" type="tItemDefinition" substitutionGroup="NamedElement"/>
 	<xsd:complexType name="tItemDefinition">
 		<xsd:complexContent>
 			<xsd:extension base="tNamedElement">
@@ -233,7 +233,7 @@
 			<xsd:element name="parameter" type="tDMNElementReference" minOccurs="1" maxOccurs="1"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:element name="InformationItem" type="tInformationItem"/>
+	<xsd:element name="InformationItem" type="tInformationItem" substitutionGroup="NamedElement"/>
 	<xsd:complexType name="tInformationItem">
 		<xsd:complexContent>
 			<xsd:extension base="tNamedElement">
