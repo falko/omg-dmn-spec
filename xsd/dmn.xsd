@@ -204,7 +204,7 @@
 							</xsd:element>
 							<xsd:element name="typeRef" type="tDMNElementReference"/>
 						</xsd:choice>
-						<xsd:element name="allowedValue" type="tExpression" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="allowedValue" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
 					</xsd:sequence>
 					<xsd:element name="itemComponent" type="tItemComponent" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:choice>
@@ -286,7 +286,7 @@
 			<xsd:choice>
 				<xsd:sequence>
 					<xsd:element name="inputExpression" type="tExpression" minOccurs="0" maxOccurs="1"/>
-					<xsd:element name="inputEntry" type="tExpression" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="inputEntry" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 				<xsd:sequence>
 					<xsd:element name="outputDefinition" type="tDMNElementReference" minOccurs="0" maxOccurs="1"/>
