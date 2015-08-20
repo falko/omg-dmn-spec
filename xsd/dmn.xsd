@@ -204,7 +204,7 @@
 							</xsd:element>
 							<xsd:element name="typeRef" type="tDMNElementReference"/>
 						</xsd:choice>
-						<xsd:element name="allowedValue" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="allowedValue" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
 					</xsd:sequence>
 					<xsd:element name="itemComponent" type="tItemComponent" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:choice>
@@ -290,8 +290,24 @@
 	</xsd:complexType>
 	<xsd:complexType name="tDecisionRule">
 		<xsd:sequence>
-			<xsd:element name="inputEntry" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element name="outputEntry" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="inputEntry" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="tUnaryTests">
+							<xsd:attribute name="inputRef" type="xsd:IDREF"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="outputEntry" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="tLiteralExpression">
+							<xsd:attribute name="outputRef" type="xsd:IDREF"/>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
 		</xsd:sequence>
 		<xsd:attribute name="id" type="xsd:ID"/>
 		<xsd:attribute name="isOrdered" type="xsd:boolean"/>
@@ -328,7 +344,7 @@
 				<xsd:sequence>
 					<!-- NB: When the isOrdered attribute is "true", the ordering of the output entries is significant and MUST be preserved -->
 					<xsd:element name="outputDefinition" type="tDMNElementReference" minOccurs="0"/>
-					<xsd:element name="outputValue" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="outputValue" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element name="defaultOutputEntry" type="tLiteralExpression" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:extension>
@@ -339,7 +355,7 @@
 			<xsd:extension base="tClause">
 				<xsd:sequence>
 					<xsd:element name="inputExpression" type="tLiteralExpression"/>
-					<xsd:element name="inputValue" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="inputValue" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -396,4 +412,17 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:simpleType name="tUnaryTests">
+		<xsd:restriction base="xsd:string">
+			<!--name-->
+			<!--number-->
+			<!--dateTime-->
+			<!--stringLiteral-->
+			<!--unaryTests1 = \((name|number|literal|dateTime)\)
+			     unaryTests2 = \((gtOrLt)(name|number|dateTime)\)
+                 unaryTests3 = \((intervalStart)(name|number|dateTime)..(name|number|dateTime)(intervalEnd)\)
+                 unaryTests4 = not? \((unaryTests1|unaryTests2|unaryTests3)(,(unaryTests1|unaryTests2|unaryTests3))*\)
+					 -->
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>
