@@ -4,7 +4,7 @@
 	<xsd:complexType name="tDMNElement">
 		<xsd:sequence>
 			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-			<xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="extensionElements" minOccurs="0" maxOccurs="1" /> 
 		</xsd:sequence>
 		<xsd:attribute name="id" type="xsd:ID" use="optional"/>
 		<xsd:anyAttribute namespace="##other" processContents="lax"/>
@@ -13,12 +13,27 @@
 	<xsd:complexType name="tDMNElementReference">
 		<xsd:attribute name="href" type="xsd:anyURI" use="required"/>
 	</xsd:complexType>
+	<xsd:element name="extension" type="tExtension"/>
+	<xsd:complexType name="tExtension">
+		<xsd:sequence>
+			<xsd:element ref="documentation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="definition" type="xsd:QName"/>
+		<xsd:attribute name="mustUnderstand" type="xsd:boolean" use="optional" default="false"/>
+	</xsd:complexType>
+	<xsd:element name="extensionElements" type="tExtensionElements" /> 
+	<xsd:complexType name="tExtensionElements">
+		<xsd:sequence>
+			<xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" /> 
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:element name="Definitions" type="tDefinitions" substitutionGroup="NamedElement"/>
 	<xsd:complexType name="tDefinitions">
 		<xsd:complexContent>
 			<xsd:extension base="tNamedElement">
 				<xsd:sequence>
 					<xsd:element ref="Import" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="extension" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="ItemDefinition" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="DRGElement" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="artifact" minOccurs="0" maxOccurs="unbounded"/>
