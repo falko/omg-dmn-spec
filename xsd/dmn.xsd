@@ -285,13 +285,13 @@
 		<xsd:sequence>
 			<xsd:choice>
 				<xsd:sequence>
-					<xsd:element name="inputExpression" type="tExpression" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="inputExpression" type="tLiteralExpression" minOccurs="0" maxOccurs="1"/>
 					<xsd:element name="inputEntry" type="tExpression" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 				<xsd:sequence>
 					<xsd:element name="outputDefinition" type="tDMNElementReference" minOccurs="0" maxOccurs="1"/>
 					<!-- NB: When the isOrdered attribute is "true", the ordering of the output entries is significant and MUST be preserved -->
-					<xsd:element name="outputEntry" type="tExpression" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="outputEntry" type="tLiteralExpression" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:choice>
 		</xsd:sequence>
