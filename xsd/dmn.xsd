@@ -217,8 +217,8 @@
 	</xsd:complexType>
 	<xsd:complexType name="tBinding">
 		<xsd:sequence>
+			<xsd:element name="parameter" type="tInformationItem" minOccurs="1" maxOccurs="1"/>
 			<xsd:element ref="Expression" minOccurs="0" maxOccurs="1"/>
-			<xsd:element name="parameter" type="tDMNElementReference" minOccurs="1" maxOccurs="1"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="InformationItem" type="tInformationItem" substitutionGroup="NamedElement"/>
