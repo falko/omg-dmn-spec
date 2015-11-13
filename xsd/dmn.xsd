@@ -204,7 +204,7 @@
 							</xsd:element>
 							<xsd:element name="typeRef" type="tDMNElementReference"/>
 						</xsd:choice>
-						<xsd:element name="allowedValue" type="tExpression" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="allowedValue" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
 					</xsd:sequence>
 					<xsd:element name="itemComponent" type="tItemComponent" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:choice>
@@ -269,8 +269,9 @@
 		<xsd:complexContent>
 			<xsd:extension base="tExpression">
 				<xsd:sequence>
-					<xsd:element name="clause" type="tClause" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="input" type="tInputClause" minOccurs="0" maxOccurs="unbounded"/>
 					<!-- NB: when the hit policy is FIRST or RULE ORDER, the ordering of the rules is significant and MUST be preserved -->
+					<xsd:element name="output" type="tOutputClause" maxOccurs="unbounded"/>
 					<xsd:element name="rule" type="tDecisionRule" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 				<xsd:attribute name="hitPolicy" type="HitPolicy" use="optional" default="UNIQUE"/>
@@ -281,28 +282,10 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:complexType name="tClause">
-		<xsd:sequence>
-			<xsd:choice>
-				<xsd:sequence>
-					<xsd:element name="inputExpression" type="tExpression" minOccurs="0" maxOccurs="1"/>
-					<xsd:element name="inputEntry" type="tExpression" minOccurs="0" maxOccurs="unbounded"/>
-				</xsd:sequence>
-				<xsd:sequence>
-					<xsd:element name="outputDefinition" type="tDMNElementReference" minOccurs="0" maxOccurs="1"/>
-					<!-- NB: When the isOrdered attribute is "true", the ordering of the output entries is significant and MUST be preserved -->
-					<xsd:element name="outputEntry" type="tExpression" minOccurs="0" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:choice>
-		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:string" use="optional"/>
-		<xsd:attribute name="isOrdered" type="xsd:boolean" use="optional" default="false"/>
-		<!-- NB: irOrdered MUST be true iff the hit policy of the containing decision table is PRIORITY or OUTPUT ORDER -->
-	</xsd:complexType>
 	<xsd:complexType name="tDecisionRule">
 		<xsd:sequence>
-			<xsd:element name="condition" type="xsd:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element name="conclusion" type="xsd:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="inputEntry" type="tUnaryTests" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="outputEntry" type="tExpression" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:simpleType name="DecisionTableOrientation">
@@ -331,6 +314,22 @@
 			<xsd:enumeration value="MAX"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:complexType name="tOutputClause">
+		<xsd:sequence>
+			<xsd:element name="outputDefinition" type="tDMNElementReference" minOccurs="0"/>
+			<!-- NB: when the hit policy is PRIORITY or OUTPUT ORDER, the ordering of the output values is significant and MUST be preserved -->
+			<xsd:element name="outputValues" type="tUnaryTests" minOccurs="0"/>
+			<xsd:element name="defaultOutputEntry" type="tLiteralExpression" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="optional"/>
+		<xsd:attribute name="typeRef" type="xsd:QName"/>
+	</xsd:complexType>
+	<xsd:complexType name="tInputClause">
+		<xsd:sequence>
+			<xsd:element name="inputExpression" type="tExpression"/>
+			<xsd:element name="inputValues" type="tUnaryTests" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:element name="Context" type="tContext" substitutionGroup="Expression" />
 
 	<xsd:complexType name="tContext">
@@ -384,6 +383,16 @@
 				<xsd:sequence>
 					<xsd:element ref="Expression" maxOccurs="unbounded" minOccurs="0"/>
 				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="tUnaryTests">
+		<xsd:complexContent>
+			<xsd:extension base="tDMNElement">
+				<xsd:sequence>
+					<xsd:element name="text" type="xsd:string"/>
+				</xsd:sequence>
+				<xsd:attribute name="expressionLanguage" type="xsd:anyURI" use="optional"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
