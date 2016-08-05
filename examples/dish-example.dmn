@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions id="dish" name="Dish"    
+<definitions id="dish-decisions" name="Dish Decisions"
   namespace="http://camunda.org/schema/1.0/dmn"
   xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI"
   xmlns:dc="http://www.omg.org/spec/DMN/20151101/DC"
   xmlns:di="http://www.omg.org/spec/DMN/20151101/DI">
-  
+
   <inputData name="Type of day" id="dayType_id">
     <variable typeRef="string" name="Type of day" id="dayType_ii"/>
   </inputData>
@@ -14,7 +14,7 @@
     <variable typeRef="integer" name="Weather in Celsius" id="temperature_ii"/>
   </inputData>
   <knowledgeSource name="Host" id="host_ks"/>
-  <decision id="dish-decision" name="Dish Decision">
+  <decision id="dish" name="Dish">
     <informationRequirement id="season_ir">
       <requiredDecision href="#season" />
     </informationRequirement>
@@ -104,7 +104,7 @@
       </rule>
     </decisionTable>
   </decision>
-  <decision id="season" name="Season decision">
+  <decision id="season" name="Season">
     <informationRequirement id="temperature_ir">
       <requiredInput href="#temperature_id"/>
     </informationRequirement>
