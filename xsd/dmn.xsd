@@ -121,6 +121,7 @@
 			<xsd:extension base="tDRGElement">
 				<xsd:sequence>
 					<xsd:element name="encapsulatedLogic" type="tFunctionDefinition" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="referencedService" type="tDMNElementReference" minOccurs="0" maxOccurs="1"/>
 					<xsd:element name="variable" type="tInformationItem" minOccurs="0"/>
 					<xsd:element name="knowledgeRequirement" type="tKnowledgeRequirement" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element name="authorityRequirement" type="tAuthorityRequirement" minOccurs="0" maxOccurs="unbounded"/>
