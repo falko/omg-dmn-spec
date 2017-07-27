@@ -115,8 +115,8 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="abstractBusinessKnowledgeModel" type="tAbstractBusinessKnowledgeModel" abstract="true" substitutionGroup="drgElement"/>
-	<xsd:complexType name="tAbstractBusinessKnowledgeModel">
+	<xsd:element name="invocable" type="tInvocable" abstract="true" substitutionGroup="drgElement"/>
+	<xsd:complexType name="tInvocable">
 		<xsd:complexContent>
 			<xsd:extension base="tDRGElement">
 				<xsd:sequence>
@@ -125,10 +125,10 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="businessKnowledgeModel" type="tBusinessKnowledgeModel" substitutionGroup="abstractBusinessKnowledgeModel"/>
+	<xsd:element name="businessKnowledgeModel" type="tBusinessKnowledgeModel" substitutionGroup="invocable"/>
 	<xsd:complexType name="tBusinessKnowledgeModel">
 		<xsd:complexContent>
-			<xsd:extension base="tAbstractBusinessKnowledgeModel">
+			<xsd:extension base="tInvocable">
 				<xsd:sequence>
 					<xsd:element name="encapsulatedLogic" type="tFunctionDefinition" minOccurs="0" maxOccurs="1"/>
 					<xsd:element name="knowledgeRequirement" type="tKnowledgeRequirement" minOccurs="0" maxOccurs="unbounded"/>
@@ -459,15 +459,25 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="decisionService" type="tDecisionService" substitutionGroup="abstractBusinessKnowledgeModel"/>
+	<xsd:element name="decisionService" type="tDecisionService" substitutionGroup="invocable"/>
 	<xsd:complexType name="tDecisionService">
 		<xsd:complexContent>
-			<xsd:extension base="tAbstractBusinessKnowledgeModel">
+			<xsd:extension base="tInvocable">
 				<xsd:sequence>
 					<xsd:element name="outputDecision" type="tDMNElementReference" maxOccurs="unbounded"/>
 					<xsd:element name="encapsulatedDecision" type="tDMNElementReference" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element name="inputDecision" type="tDMNElementReference" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element name="inputData" type="tDMNElementReference" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="decisionServiceReference" type="tDecisionServiceReference" substitutionGroup="invocable"/>
+	<xsd:complexType name="tDecisionServiceReference">
+		<xsd:complexContent>
+			<xsd:extension base="tInvocable">
+				<xsd:sequence>
+					<xsd:element name="referencedDecisionService" type="tDMNElementReference" minOccurs="0" maxOccurs="1"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
