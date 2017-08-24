@@ -472,14 +472,4 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="decisionServiceReference" type="tDecisionServiceReference" substitutionGroup="invocable"/>
-	<xsd:complexType name="tDecisionServiceReference">
-		<xsd:complexContent>
-			<xsd:extension base="tInvocable">
-				<xsd:sequence>
-					<xsd:element name="referencedDecisionService" type="tDMNElementReference" minOccurs="0" maxOccurs="1"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
 </xsd:schema>
