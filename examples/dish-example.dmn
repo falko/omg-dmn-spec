@@ -2,6 +2,7 @@
 <definitions id="dish-decisions" name="Dish Decisions"
   namespace="http://camunda.org/schema/1.0/dmn"
   xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+  xsi:schemaLocation="http://www.omg.org/spec/DMN/20151101/dmn.xsd ../xsd/dmn.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI"
   xmlns:dc="http://www.omg.org/spec/DMN/20151101/DC"
