@@ -61,7 +61,11 @@
 	</xsd:complexType>
 	<xsd:complexType name="DMNLabel">
 		<xsd:complexContent>
-			<xsd:extension base="di:Shape"/>
+			<xsd:extension base="di:Shape">
+				<xsd:sequence>
+					<xsd:element name="text" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:complexType name="DMNStyle">
