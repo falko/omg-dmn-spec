@@ -72,9 +72,9 @@
 		<xsd:complexContent>
 			<xsd:extension base="di:Style">
 				<xsd:sequence>
-					<xsd:element name="fillColor" type="dc:Color" minOccurs="0" maxOccurs="1"/>
-					<xsd:element name="strokeColor" type="dc:Color" minOccurs="0" maxOccurs="1"/>
-					<xsd:element name="fontColor" type="dc:Color" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="FillColor" type="dc:Color" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="StrokeColor" type="dc:Color" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="FontColor" type="dc:Color" minOccurs="0" maxOccurs="1"/>
 				</xsd:sequence>
 				<xsd:attribute name="fontFamily" type="xsd:string"/>
 				<xsd:attribute name="fontSize" type="xsd:double"/>
