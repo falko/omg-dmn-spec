@@ -43,10 +43,10 @@
 			<xsd:extension base="di:Shape">
 				<xsd:sequence>
 					<xsd:element ref="dmndi:DMNLabel" minOccurs="0" maxOccurs="1"/>
-					<xsd:element name="DMNListedInputDataLabel" type="dmndi:DMNLabel" minOccurs="0" maxOccurs="1"/>
 				</xsd:sequence>
 				<xsd:attribute name="dmnElementRef" type="xsd:QName" use="required"/>
 				<xsd:attribute name="dividerPosition" type="xsd:double" use="optional"/>
+				<xsd:attribute name="isListedInputData" type="xsd:boolean" use="optional"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
