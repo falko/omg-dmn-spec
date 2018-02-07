@@ -22,6 +22,7 @@
 	<xsd:element name="DMNEdge" type="dmndi:DMNEdge" substitutionGroup="dmndi:DMNDiagramElement"/>
 	<xsd:element name="DMNStyle" type="dmndi:DMNStyle" substitutionGroup="di:Style"/>
 	<xsd:element name="DMNLabel" type="dmndi:DMNLabel"/>
+	<xsd:element name="DMNDecisionServiceDividerLine" type="dmndi:DMNDecisionServiceDividerLine"/>
 	<xsd:complexType name="DMNDI">
 		<xsd:sequence>
 			<xsd:element ref="dmndi:DMNDiagram" minOccurs="0" maxOccurs="unbounded"/>
@@ -43,9 +44,9 @@
 			<xsd:extension base="di:Shape">
 				<xsd:sequence>
 					<xsd:element ref="dmndi:DMNLabel" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="dmndi:DMNDecisionServiceDividerLine" minOccurs="0" maxOccurs="1"/>
 				</xsd:sequence>
 				<xsd:attribute name="dmnElementRef" type="xsd:QName" use="required"/>
-				<xsd:attribute name="dividerPosition" type="xsd:double" use="optional"/>
 				<xsd:attribute name="isListedInputData" type="xsd:boolean" use="optional"/>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -57,6 +58,12 @@
 					<xsd:element ref="dmndi:DMNLabel" minOccurs="0" maxOccurs="1"/>
 				</xsd:sequence>
 				<xsd:attribute name="dmnElementRef" type="xsd:QName" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DMNDecisionServiceDividerLine">
+		<xsd:complexContent>
+			<xsd:extension base="di:Edge">
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
