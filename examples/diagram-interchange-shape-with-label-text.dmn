@@ -15,9 +15,9 @@
       <dmndi:DMNShape id="_DMNShape_Decision_1" dmnElementRef="Decision_1">
         <dc:Bounds x="200" y="200" width="180" height="80"/>
         <dmndi:DMNLabel>
-          <dmndi:text><![CDATA[Deci-
+          <dmndi:Text><![CDATA[Deci-
 sion
-1]]></dmndi:text>
+1]]></dmndi:Text>
         </dmndi:DMNLabel>
       </dmndi:DMNShape>
     </dmndi:DMNDiagram>
