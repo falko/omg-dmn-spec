@@ -4,16 +4,16 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI"
 	targetNamespace="http://www.omg.org/spec/DMN/20151101/dmn.xsd">
-	
+
 	<xsd:import namespace="http://www.omg.org/spec/DMN/20151101/DMNDI" 
-              schemaLocation="DMNDI.xsd">
-	  <xsd:annotation>
-	    <xsd:documentation>
-		  Include the DMN Diagram Interchange (DI) schema
-	    </xsd:documentation>
-	  </xsd:annotation>
-    </xsd:import>
-	
+	            schemaLocation="DMNDI.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+				Include the DMN Diagram Interchange (DI) schema
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:import>
+
 	<xsd:element name="DMNElement" type="tDMNElement" abstract="true"/>
 	<xsd:complexType name="tDMNElement">
 		<xsd:sequence>

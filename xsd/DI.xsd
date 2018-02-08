@@ -6,15 +6,18 @@
             elementFormDefault="qualified" 
             attributeFormDefault="unqualified">
 	<xsd:import namespace="http://www.omg.org/spec/DMN/20151101/DC" 
-                    schemaLocation="DC.xsd"/>
+	            schemaLocation="DC.xsd"/>
+
 	<xsd:annotation>
 		<xsd:documentation>The Diagram Interchange (DI) package enables interchange of graphical information that language users have control over, such as position of nodes and line routing points. Language specifications specialize elements of DI to define diagram interchange elements for a language.</xsd:documentation>
 	</xsd:annotation>
+
 	<xsd:element name="Style" type="di:Style">
 		<xsd:annotation>
 			<xsd:documentation>This element should never be instantiated directly, but rather concrete implementation should. It is placed there only to be referred in the sequence</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+
 	<xsd:complexType name="DiagramElement" abstract="true">
 		<xsd:annotation>
 			<xsd:documentation>DiagramElement is the abstract super type of all elements in diagrams, including diagrams themselves. When contained in a diagram, diagram elements are laid out relative to the diagram's origin.</xsd:documentation>
@@ -41,19 +44,7 @@
 		<xsd:attribute name="id" type="xsd:ID"/>
 		<xsd:anyAttribute namespace="##other" processContents="lax"/>
 	</xsd:complexType>
-	<xsd:complexType name="Edge" abstract="true">
-		<xsd:complexContent>
-			<xsd:extension base="di:DiagramElement">
-				<xsd:sequence>
-					<xsd:element name="waypoint" type="dc:Point" minOccurs="0" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>an optional list of points relative to the origin of the nesting diagram that specifies the connected line segments of the edge</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+
 	<xsd:complexType name="Diagram" abstract="true">
 		<xsd:complexContent>
 			<xsd:extension base="di:DiagramElement">			
@@ -75,6 +66,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
 	<xsd:complexType name="Shape" abstract="true">
 		<xsd:complexContent>
 			<xsd:extension base="di:DiagramElement">
@@ -88,6 +80,21 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
+	<xsd:complexType name="Edge" abstract="true">
+		<xsd:complexContent>
+			<xsd:extension base="di:DiagramElement">
+				<xsd:sequence>
+					<xsd:element name="waypoint" type="dc:Point" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>an optional list of points relative to the origin of the nesting diagram that specifies the connected line segments of the edge</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="Style" abstract="true">
 		<xsd:annotation>
 			<xsd:documentation>Style contains formatting properties that affect the appearance or style of diagram elements, including diagram themselves.</xsd:documentation>
@@ -104,4 +111,5 @@
 		<xsd:attribute name="id" type="xsd:ID"/>
 		<xsd:anyAttribute namespace="##other" processContents="lax"/>
 	</xsd:complexType>
+
 </xsd:schema>

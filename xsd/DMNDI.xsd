@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-            xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI" 
-            xmlns:dc="http://www.omg.org/spec/DMN/20151101/DC" 
-            xmlns:di="http://www.omg.org/spec/DMN/20151101/DI" 
-            targetNamespace="http://www.omg.org/spec/DMN/20151101/DMNDI" 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI"
+            xmlns:dc="http://www.omg.org/spec/DMN/20151101/DC"
+            xmlns:di="http://www.omg.org/spec/DMN/20151101/DI"
+            targetNamespace="http://www.omg.org/spec/DMN/20151101/DMNDI"
             elementFormDefault="qualified" attributeFormDefault="unqualified">
-			
-	<xsd:import namespace="http://www.omg.org/spec/DMN/20151101/DC" 
-                    schemaLocation="DC.xsd"/>
+
+	<xsd:import namespace="http://www.omg.org/spec/DMN/20151101/DC"
+	            schemaLocation="DC.xsd"/>
 	<xsd:import namespace="http://www.omg.org/spec/DMN/20151101/DI"
-                    schemaLocation="DI.xsd"/>	
-					
+	            schemaLocation="DI.xsd"/>
+
 	<xsd:element name="DMNDI" type="dmndi:DMNDI"/>
 	<xsd:element name="DMNDiagram" type="dmndi:DMNDiagram"/>
 	<xsd:element name="DMNDiagramElement" type="di:DiagramElement">
@@ -23,12 +23,14 @@
 	<xsd:element name="DMNStyle" type="dmndi:DMNStyle" substitutionGroup="di:Style"/>
 	<xsd:element name="DMNLabel" type="dmndi:DMNLabel"/>
 	<xsd:element name="DMNDecisionServiceDividerLine" type="dmndi:DMNDecisionServiceDividerLine"/>
+
 	<xsd:complexType name="DMNDI">
 		<xsd:sequence>
 			<xsd:element ref="dmndi:DMNDiagram" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="dmndi:DMNStyle" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
+
 	<xsd:complexType name="DMNDiagram">
 		<xsd:complexContent>
 			<xsd:extension base="di:Diagram">
@@ -39,6 +41,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
 	<xsd:complexType name="DMNShape">
 		<xsd:complexContent>
 			<xsd:extension base="di:Shape">
@@ -51,6 +54,13 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
+		<xsd:complexType name="DMNDecisionServiceDividerLine">
+		<xsd:complexContent>
+			<xsd:extension base="di:Edge"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="DMNEdge">
 		<xsd:complexContent>
 			<xsd:extension base="di:Edge">
@@ -61,12 +71,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:complexType name="DMNDecisionServiceDividerLine">
-		<xsd:complexContent>
-			<xsd:extension base="di:Edge">
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+
 	<xsd:complexType name="DMNLabel">
 		<xsd:complexContent>
 			<xsd:extension base="di:Shape">
@@ -76,6 +81,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
 	<xsd:complexType name="DMNStyle">
 		<xsd:complexContent>
 			<xsd:extension base="di:Style">
@@ -95,4 +101,5 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
 </xsd:schema>
