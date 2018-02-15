@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified"
-	xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" 
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-	xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI"
-	targetNamespace="http://www.omg.org/spec/DMN/20151101/dmn.xsd">
+	xmlns="http://www.omg.org/spec/DMN/20180521/MODEL/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/"
+	targetNamespace="http://www.omg.org/spec/DMN/20180521/MODEL/">
 
-	<xsd:import namespace="http://www.omg.org/spec/DMN/20151101/DMNDI" 
+	<xsd:import namespace="http://www.omg.org/spec/DMN/20180521/DMNDI/"
 	            schemaLocation="DMNDI.xsd">
 		<xsd:annotation>
 			<xsd:documentation>
